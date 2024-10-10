@@ -1,12 +1,13 @@
 <?php
 session_start();
+declare(strict_types=1);
 require_once('../model/database.php');
 //getting data from form
-$firstName = filter_input(INPUT_POST, 'firstName');
-$lastName = filter_input(INPUT_POST, 'lastName');
-$email = filter_input(INPUT_POST, 'email');
-$phone = filter_input(INPUT_POST, 'phone');
-$password = filter_input(INPUT_POST, 'password');
+$firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
+$lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
+$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+$phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
+$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
 
 // code to save data to SQL database

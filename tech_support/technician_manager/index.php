@@ -7,7 +7,7 @@ require('../model/Technician.php');
 $queryProducts = 'SELECT * FROM technicians';
 $statement = $db->prepare($queryProducts);
 $statement->execute();
-$techniciansData = $statement->fetchAll(); //  fetch an associative array
+$techniciansData = $statement->fetchAll(); 
 $statement->closeCursor();
 ?>
 
@@ -44,9 +44,9 @@ $statement->closeCursor();
             <?php
             // Instantiate Technician object inside the loop
             $technician = new Technician(
-                (int)$technicianData['techID'],
+                (int)$technicianData['techID'], 
                 $technicianData['firstName'],
-                $technicianData['lastName'], // Corrected the typo
+                $technicianData['lastName'], 
                 $technicianData['email'],
                 $technicianData['phone'],
                 $technicianData['password']
