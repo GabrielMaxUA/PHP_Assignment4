@@ -131,12 +131,11 @@ $statement->closeCursor();
 
             <input type="hidden" name="custID" value="<?php echo htmlspecialchars($custID); ?>">
 
-            <div class="labs">
+            <div class="button">
                 <input type="submit" value="Update">
             </div>
         </div>
     </form>
-    <a href="index.php">Search Customers</a>
 </main>
 
 <?php include '../view/footer.php'; ?>
