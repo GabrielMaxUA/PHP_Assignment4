@@ -37,6 +37,7 @@ $statement-> closeCursor();
         <th>Product name</th>
         <th>Version</th>
         <th>Release Date</th>
+        <!-- <th>&nbsp</th> for update button -->
         <th>&nbsp</th> <!-- for delete button -->
       </tr>
         <?php foreach($products as $product):?> <!--: instead of { } like in other languages -->
@@ -49,12 +50,20 @@ $statement-> closeCursor();
                 $releaseDate = new DateTime($product['releaseDate']);
                 echo $releaseDate->format('n-j-Y');
                 ?>
-            <td>
-            <form action = "delete_product.php" method = "post">
-            <input type="hidden" name = "code" value = "<?php echo $product['productCode'];?>"/>  
-            <input type="submit" value = "Delete"/>
-            </form>
-          </td> <!-- for delete button -->
+                  <!-- <td>
+                    <form action = "add_product.php" method = "post">
+                      <input type="hidden" name = "code" value = "
+                      <?php echo $product['productCode'];?>
+                      "/>  
+                      <input type="submit" value = "Update"/>
+                    </form>
+                  </td> -->
+                  <td>
+                    <form action = "delete_product.php" method = "post">
+                      <input type="hidden" name = "code" value = "<?php echo $product['productCode'];?>"/>  
+                      <input type="submit" value = "Delete"/>
+                    </form>
+                 </td> 
          </tr>
         <?php endforeach; ?> <!-- end of forearch loop -->
     </table>

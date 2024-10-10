@@ -45,12 +45,11 @@ session_start(); ?>
                 <input type="text" name="date" placeholder="Enter date (any standard format)"><br>
             </div>
 
-            <div class="labs">
+            <div class="button">
                 <input type="submit" value="Add">
             </div>
         </div>
     </form>
-    <a href="index.php">View product list</a>
 </main>
 
 <?php include '../view/footer.php'; ?>

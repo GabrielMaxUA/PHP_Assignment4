@@ -28,9 +28,11 @@ session_start(); // Start the session to access session variables
         <?php 
         // Check if there's an error message set in the session
         if (isset($_SESSION['error'])) {
-            // Display the error message and clear it from the session
             echo htmlspecialchars($_SESSION['error']);
-            unset($_SESSION['error']); // Clear the error after displaying it
+            // Clear the error message after displaying it
+            unset($_SESSION['error']);
+        } else {
+            echo "An unknown error occurred.";
         }
         ?>
     </p>
