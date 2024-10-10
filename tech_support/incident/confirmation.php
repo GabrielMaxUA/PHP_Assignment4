@@ -6,20 +6,18 @@ require_once('../model/database.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Retrieve form data
+    $customerID = $_SESSION['custID'];
     $productCode = filter_input(INPUT_POST, 'productCode', FILTER_SANITIZE_STRING);
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
-
-    // Retrieve the customerID from the session
-    $customerID = $_SESSION['custID'];
 
     // Get the current date
     $dateOpened = date("Y-m-d");
 
     // Validate form inputs
     if (empty($productCode) || empty($title) || empty($description)) {
-        $error = "All fields are required.";
-        include '../view/error.php';  // A simple error page to display errors
+        $_SESSION['error'] = "All fields are required.";
+        include '../errors/error.php';  // A simple error page to display errors
         exit();
     }
 
@@ -66,10 +64,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <main id="confirmation">
     <h2>Register Product</h2>
-    <p>Thank you <?php echo $_SESSION['cutomer']?></p>
+    <p>Thank you <?php echo $_SESSION['customer']?></p>
     <p>The incident was registered successfully.</p>
 
-    <?php unset($_SESSION['customer']); // Clear the session variable after use ?>
+
 </main>
 
 <footer>
