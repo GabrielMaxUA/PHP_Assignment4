@@ -1,12 +1,14 @@
 <?php
 session_start();
 require('../model/database.php');
-$queryProducts = 'SELECT * FROM technicians';
-$statement = $db-> prepare($queryProducts);
-$statement-> execute();
-$technicians = $statement->fetchAll();
-$statement-> closeCursor();
+require('../model/Technician.php');
 
+// Fetch technicians from the database
+$queryProducts = 'SELECT * FROM technicians';
+$statement = $db->prepare($queryProducts);
+$statement->execute();
+$techniciansData = $statement->fetchAll(); //  fetch an associative array
+$statement->closeCursor();
 ?>
 
 <!DOCTYPE html>
@@ -15,8 +17,7 @@ $statement-> closeCursor();
 <!-- the head section -->
 <head>
     <title>SportsPro Technical Support</title>
-    <link rel="stylesheet" type="text/css"
-          href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
 </head>
 
 <!-- the body section -->
@@ -30,33 +31,44 @@ $statement-> closeCursor();
         </ul>
     </nav>
 </header>
-    <main>
+<main>
     <table>
-      <tr>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Password</th>
-        <th>&nbsp</th> <!-- for delete button -->
-      </tr>
-        <?php foreach($technicians as $technician):?> <!--: instead of { } like in other languages -->
-         <tr>
-          <td><?php echo $technician['firstName'];?></td>
-          <td><?php echo $technician['lastName'];?></td>
-          <td><?php echo $technician['email'];?></td>
-          <td><?php echo $technician['phone'];?></td>
-          <td><?php echo $technician['password'];?></td>
-          <td>
-            <form action = "delete_tech.php" method = "post">
-            <input type="hidden" name = "techID" value = "<?php echo $technician['techID'];?>"/>  
-            <input type="submit" value = "Delete"/>
-            </form>
-          </td> <!-- for delete button -->
-         </tr>
-        <?php endforeach; ?> <!-- end of forearch loop -->
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Password</th>
+            <th>&nbsp;</th> <!-- for delete button -->
+        </tr>
+        <?php foreach ($techniciansData as $technicianData): ?> <!-- using correct variable name -->
+            <?php
+            // Instantiate Technician object inside the loop
+            $technician = new Technician(
+                (int)$technicianData['techID'],
+                $technicianData['firstName'],
+                $technicianData['lastName'], // Corrected the typo
+                $technicianData['email'],
+                $technicianData['phone'],
+                $technicianData['password']
+            );
+            ?>
+            <tr>
+                <td><?php echo htmlspecialchars($technician->getFullName()); ?></td>
+                <td><?php echo htmlspecialchars($technician->getEmail()); ?></td>
+                <td><?php echo htmlspecialchars($technician->getPhone()); ?></td>
+                <td><?php echo htmlspecialchars($technician->getPassword()); ?></td>
+                <td>
+                    <form action="delete_tech.php" method="post">
+                        <input type="hidden" name="techID" value="<?php echo htmlspecialchars($technician->getTechID()); ?>" />  
+                        <input type="submit" value="Delete" />
+                    </form>
+                </td>
+            </tr>
+        <?php endforeach; ?>
     </table>
-    <p class = "option"><a href="add_technician_form.php">Add a technician</a></p>
+    <p class="option"><a href="add_technician_form.php">Add a technician</a></p>
 </main>
-    
+
 <?php include '../view/footer.php'; ?>
+</body>
+</html>
