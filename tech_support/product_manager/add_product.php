@@ -1,12 +1,13 @@
 <?php
 session_start();
+declare(strict_types=1);
 require_once('../model/database.php');
 
 // Getting data from the form
-$code = filter_input(INPUT_POST, 'code');
-$name = filter_input(INPUT_POST, 'name');
-$version = filter_input(INPUT_POST, 'version');
-$release = filter_input(INPUT_POST, 'date'); // Release date input from form
+$code = filter_input(INPUT_POST, 'code', FILTER_SANITIZE_STRING);
+$name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+$version = filter_input(INPUT_POST, 'version', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); // Cast version as a float
+$release = filter_input(INPUT_POST, 'date', FILTER_SANITIZE_STRING); // Release date input from form
 
 // Code to save data to SQL database
 // Validating the inputs from add_product_form
